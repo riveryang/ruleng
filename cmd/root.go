@@ -92,7 +92,7 @@ var RootCmd = &cobra.Command{
 			for _, binding := range bindings {
 				log.Println(binding.HostIP + ":" + binding.HostPort + " -> " + port.Port())
 				if binding.HostPort != "" && port.Port() != "" {
-					p := "export PORT_" + port.Port() + "=" + binding.HostPort + "\n"
+					p := "export PROXY_PORT_" + port.Port() + "=" + binding.HostPort + "\n"
 					log.Println(p)
 					profiles += p
 				}
