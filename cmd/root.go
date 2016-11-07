@@ -22,11 +22,9 @@ import (
 	"encoding/json"
 	"github.com/docker/docker/daemon/network"
 	"github.com/spf13/cobra"
-	"strconv"
 	"github.com/gobuild/log"
+	"strconv"
 )
-
-var cfgFile string
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
@@ -37,24 +35,14 @@ var RootCmd = &cobra.Command{
 			return err
 		}
 
-		hostIP := os.Getenv("HOSTIP")
-		if hostIP == "" {
-			hostIP = hostip
-		}
-
-		log.Printf("Host IP: %v", hostIP)
+		log.Printf("Host IP: %v", hostip)
 
 		port, err := cmd.Flags().GetUint("docker-port")
 		if err != nil {
 			return err
 		}
 
-		dockerPort := os.Getenv("DOCKER_PORT")
-		if dockerPort == "" {
-			dockerPort = strconv.Itoa(int(port))
-		}
-
-		log.Printf("Docker port: %v", dockerPort)
+		log.Printf("Docker port: %v", port)
 
 		name, err := cmd.Flags().GetString("hostname")
 		if err != nil {
@@ -75,7 +63,7 @@ var RootCmd = &cobra.Command{
 
 		log.Printf("Profile path: %v", profile)
 
-		resp, err := http.Get("http://" + hostIP + ":" + dockerPort + "/containers/" + hostname + "/json")
+		resp, err := http.Get("http://" + hostip + ":" + strconv.Itoa(int(port)) + "/containers/" + hostname + "/json")
 		if err != nil {
 			return err
 		}
